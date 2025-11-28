@@ -19,8 +19,25 @@ def generate_response(uploaded_file, openai_api_key, query_text):
         # Create retriever interface
         retriever = db.as_retriever()
         # Create QA chain
-        qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=openai_api_key), chain_type='stuff', retriever=retriever)
-        return qa.run(query_text)
+def generate_response(uploaded_file, openai_api_key, query_text):
+    # Build embeddings + vectorstore first
+    # (leaving your existing code intact)
+
+    llm = ChatOpenAI(model="gpt-4o-mini", api_key=openai_api_key)
+
+    prompt = ChatPromptTemplate.from_template(
+        "Use the following documents to answer the question.\n\n"
+        "Documents:\n{context}\n\n"
+        "Question: {input}\n\n"
+        "Answer:"
+    )
+
+    combine_docs_chain = create_stuff_documents_chain(llm, prompt)
+    retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
+
+    result = retrieval_chain.invoke({"input": query_text})
+    return result["answer"]
+
 
 
 # Page title
