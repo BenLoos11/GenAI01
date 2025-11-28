@@ -2,5 +2,6 @@ streamlit
 langchain
 langchain-openai
 langchain-text-splitters
+langchain-community
 chromadb
 tiktoken
