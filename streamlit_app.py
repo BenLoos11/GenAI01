@@ -2,7 +2,7 @@ import streamlit as st
 from langchain_openai import ChatOpenAI
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 
 
 def generate_response(uploaded_file, openai_api_key, query_text):
